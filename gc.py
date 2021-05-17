@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from tkinter import *
 import numpy as np
+
 def DDALine(x1, y1, x2, y2, color):
         dx = int(x2) - int(x1)
         dy = int(y2) - int(y1)
@@ -19,6 +20,25 @@ def DDALine(x1, y1, x2, y2, color):
             y += delta_y
         plt.show()
         
+def bresenham(x1,y1,x2,y2,color):
+	dx = int(x2)-int(x1)
+	dy = int(y2)-int(y1)
+
+	D = 2*dy - dx
+	
+	y = int(y1)
+
+	for x in range(int(x1)+1,int(x2)+1):
+		if D > 0:
+			y += 1
+			plt.plot(x,y,color)
+			D += (2*dy-2*dx)
+		else:
+			plt.plot(x,y,color)
+			D += 2*dy
+	plt.show()
+
+   
 def line():
     line = Tk()
     line.title("선그리기")
@@ -45,7 +65,8 @@ def line():
     d.grid(row=3,column=1)
     
     Button(line,text="DDA",width='10',command=lambda : DDALine(a.get(), b.get(), c.get(), d.get(), 'r.')).grid(row=1,column=2)
-
+    Button(line,text="Bresenham",width='10',command=lambda : bresenham(a.get(), b.get(), c.get(), d.get(), 'r.')).grid(row=2,column=2)
+    
 
 main = Tk()
 main.title("CG 중간대체 과제")
