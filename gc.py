@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from tkinter import *
 import numpy as np
+import matplotlib.patches as patches
 
 def DDALine(x1, y1, x2, y2, color):
         dx = int(x2) - int(x1)
@@ -67,11 +68,55 @@ def line():
     Button(line,text="DDA",width='10',command=lambda : DDALine(a.get(), b.get(), c.get(), d.get(), 'r.')).grid(row=1,column=2)
     Button(line,text="Bresenham",width='10',command=lambda : bresenham(a.get(), b.get(), c.get(), d.get(), 'r.')).grid(row=2,column=2)
     
+def Dtri(x1,y1,x2,y2,x3,y3,tri):
+        plt.plot(X,Y)
+
+        point=np.array([[x1,y1],[x2,y2],[x3,y3]])
+        tri=patches.Polygon(point, fill=None ,edgecolor='k',ls='solid',lw=1)
+
+        plt.gca().add_patch(tri)
+
+        plt.show()
+
+        
+def tri():
+    tri = Tk()
+    tri.title("삼각형 그리기")
+    tri.geometry("310x180")
+    Label(tri,text="x",width='8').grid(row=0,column=1)
+    Label(tri,text="y",width='8').grid(row=0,column=2)
+
+    infos=["좌표1","좌표2","좌표3"]
+    a=1
+    for c in infos:
+        Label(tri,text=c,width='8').grid(row=a,column=0)
+        a=a+1
+
+    x1=Entry(tri,width=10)
+    x1.grid(row=1,column=1)      
+    y1=Entry(tri,width=10)
+    y1.grid(row=1,column=2)
+
+
+    x2=Entry(tri,width=10)
+    x2.grid(row=2,column=1)   
+    y2=Entry(tri,width=10)
+    y2.grid(row=2,column=2)
+    
+    x3=Entry(tri,width=10)
+    x3.grid(row=3,column=1)   
+    y3=Entry(tri,width=10)
+    y3.grid(row=3,column=2)
+
+    Button(tri,text="그리기",width='10',command=lambda : Dtri(x1.get(),y1.get(),x2.get(),y2.get(),x3.get(),y3.get(),tri)).grid(row=6,column=1)
+
+
 
 main = Tk()
 main.title("CG 중간대체 과제")
 main.geometry("200x150")
 
 Button(main,text="선 그리기",width='20', command = line).pack()
+Button(main,text="삼각형 그리기",width='20', command=tri).pack()
 
 main.mainloop()
