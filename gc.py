@@ -110,6 +110,43 @@ def tri():
 
     Button(tri,text="그리기",width='10',command=lambda : Dtri(x1.get(),y1.get(),x2.get(),y2.get(),x3.get(),y3.get(),tri)).grid(row=6,column=1)
 
+def Dcir(x,y,redius):
+
+        center = (int(x),int(y))
+        redius_ = int(redius)
+        draw_circle = plt.Circle(center, redius_, fill=False)
+
+        a = plt.axes(xlim=(-100,100),ylim=(-100,100))
+        a.add_patch(draw_circle)
+        a.set_aspect('equal')
+
+        plt.title('Circle')
+        plt.show()
+        
+def circle():
+        cir = Tk()
+        cir.title("원 그리기")
+        cir.geometry("250x100")
+        
+        Label(cir,text="x",width='8').grid(row=0,column=1)
+        Label(cir,text="y",width='8').grid(row=0,column=2)
+
+        infos=["좌표","반지름"]
+        a=1
+        for c in infos:
+                Label(cir,text=c,width='8').grid(row=a,column=0)
+                a=a+1
+
+        x=Entry(cir,width=10)
+        x.grid(row=1,column=1)      
+        y=Entry(cir,width=10)
+        y.grid(row=1,column=2)
+
+        redius=Entry(cir,width=10)
+        redius.grid(row=2,column=1)
+
+        Button(cir,text="그리기",width='10',command=lambda : Dcir(x.get(),y.get(),redius.get())).grid(row=2,column=2)
+        
 
 
 main = Tk()
@@ -118,5 +155,7 @@ main.geometry("200x150")
 
 Button(main,text="선 그리기",width='20', command = line).pack()
 Button(main,text="삼각형 그리기",width='20', command=tri).pack()
+Button(main,text="원 그리기",width='20', command= circle).pack()
+
 
 main.mainloop()
