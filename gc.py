@@ -69,6 +69,44 @@ def line():
     Button(line,text="Bresenham",width='10',command=lambda : bresenham(a.get(), b.get(), c.get(), d.get(), 'r.')).grid(row=2,column=2)
     
 def Dtri(x1,y1,x2,y2,x3,y3,tri):
+        def Scale(x1,y1,x2,y2,x3,y3,s1,s2):
+                point1 = [int(x1),int(x2),int(x3)]
+                point2 = [int(y1),int(y2),int(y3)]
+                sp1=[]
+                sp2=[]
+                nsp=[]
+                a=0
+                for x in point1:
+                        sp1.append(x * int(s1))
+                
+                for y in point2:
+                        sp2.append(y * int(s2))
+               
+                while a<3:
+                    nsp.append([sp1[a],sp2[a]])
+                    a=a+1
+
+               
+                
+                X=np.array([-300,300])
+                Y=np.array([-300,300])
+
+                plt.plot(X,Y,color='None')
+
+                point=np.array([nsp[0],nsp[1],nsp[2]])
+
+                tri=patches.Polygon(point, fill=None ,edgecolor='k',ls='solid',lw=1)
+
+                plt.gca().add_patch(tri) 
+                plt.show()
+
+        Button(tri,text="신축",width='10', command=lambda : Scale(x1,y1,x2,y2,x3,y3,int(s1.get()),int(s2.get()))).grid(row=6,column=2)
+
+        s1=Entry(tri,width=10)
+        s1.grid(row=4,column=1)
+        s2=Entry(tri,width=10)
+        s2.grid(row=4,column=2)
+        
         plt.plot(X,Y)
 
         point=np.array([[x1,y1],[x2,y2],[x3,y3]])
@@ -86,7 +124,7 @@ def tri():
     Label(tri,text="x",width='8').grid(row=0,column=1)
     Label(tri,text="y",width='8').grid(row=0,column=2)
 
-    infos=["좌표1","좌표2","좌표3"]
+    infos=["좌표1","좌표2","좌표3","배율"]
     a=1
     for c in infos:
         Label(tri,text=c,width='8').grid(row=a,column=0)
