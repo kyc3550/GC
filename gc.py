@@ -1,7 +1,10 @@
-import matplotlib.pyplot as plt
-from tkinter import *
 import numpy as np
 import matplotlib.patches as patches
+from tkinter import *
+from functools import partial
+import matplotlib.pyplot as plt
+import math
+
 
 def DDALine(x1, y1, x2, y2, color):
         dx = int(x2) - int(x1)
@@ -99,7 +102,33 @@ def Dtri(x1,y1,x2,y2,x3,y3,tri):
 
                 plt.gca().add_patch(tri) 
                 plt.show()
+                
+        def rotate(x1,y1,x2,y2,x3,y3,n,a):
+                rot = np.array([[math.cos(a),math.sin(-a)],[math.sin(a),math.cos(a)]])
+                if n==1:
+                    v2 = np.array([[int(x2)],[int(y2)]])
+                    v3 = np.array([[int(x3)],[int(y3)]])
+                    rot_v2 = np.dot(rot,v2)
+                    rot_v3 = np.dot(rot,v3)
+                   
+                    X=np.array([-300,300])
+                    Y=np.array([-300,300])
+                    plt.plot(X,Y,color='None')
+                    rot_point=np.array([[x1,y1],[rot_v2[0][0],rot_v2[1][0]],[rot_v3[0][0],rot_v3[1][0]]])
+                    rot_tri=patches.Polygon(rot_point, fill=None ,edgecolor='k',ls='solid',lw=1)
+                    plt.gca().add_patch(rot_tri)
+                    plt.show()
 
+        rot_v=Entry(tri,width=10)
+        rot_v.grid(row=5,column=1)
+        Label(tri,text="회전",width='8').grid(row=0,column=3)           
+
+        n=IntVar()
+        radio1=Radiobutton(tri, text = "1",value=1, variable=n, command = lambda : rotate(x1,y1,x2,y2,x3,y3,1,int(rot_v.get()))).grid(row=1, column=3)
+        radio2=Radiobutton(tri, text = "2",value=2, variable=n, command = lambda : rotate(x1,y1,x2,y2,x3,y3,2,int(rot_v.get()))).grid(row=2, column=3)
+        radio3=Radiobutton(tri, text = "3",value=3, variable=n, command = lambda : rotate(x1,y1,x2,y2,x3,y3,3,int(rot_v.get()))).grid(row=3, column=3)
+
+   
         Button(tri,text="신축",width='10', command=lambda : Scale(x1,y1,x2,y2,x3,y3,int(s1.get()),int(s2.get()))).grid(row=6,column=2)
 
         s1=Entry(tri,width=10)
@@ -124,7 +153,7 @@ def tri():
     Label(tri,text="x",width='8').grid(row=0,column=1)
     Label(tri,text="y",width='8').grid(row=0,column=2)
 
-    infos=["좌표1","좌표2","좌표3","배율"]
+    infos=["좌표1","좌표2","좌표3","배율","회전각"]
     a=1
     for c in infos:
         Label(tri,text=c,width='8').grid(row=a,column=0)
